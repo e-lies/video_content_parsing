@@ -1,0 +1,85 @@
+[
+    {
+        "id": "670e566c48af5f1bf41e3e57",
+        "name": "Luka & Léo",
+        "videoPrompt": "Cette vidéo est issue d'un programme éducatif québecois qui répond à des questions. Il est animé soit par un homme nommé Luka (moustachu et cheveux bouclés), soit par une femme blonde nommée Léo.\nQuels sont les personnages principaux de la vidéo ? quelles questions sont abordées ? quelles sont les réponses ?" ,
+        "schemaDescription": "Remplis chaque élément à partir des informations disponibles dans ce texte qui est la transcription d'une vidéo d'un programme éducatif qui répond à des questions.",
+        "jsonSchema": {
+            "questions": {
+                "type": "string",
+                "required": true,
+                "multiple": true,
+                "description": "Expliquer quelle est la question traitée"
+            },
+            "characters":{
+                "type": "string",
+                "multiple": true,
+                "required": true,
+                "description": "les personnages principaux qui apparaissent dans la vidéo"
+            },
+            "réponses":{
+                "type": "string",
+                "required": true,
+                "multiple": true,
+                "description": "un résumé de la réponse donnée à la question principale"
+            }
+        }
+    },
+    {
+        "id": "670fb0ccd3847000c0405d5c",
+        "name": "Cuisinez",
+        "videoPrompt": "Cette vidéo est issue d'une émission de rectte de cuisine. L'objectif est de décrire les ingrédients et les étapes de la recette, et si possible, de décrire qui présente le programme.",
+        "schemaDescription": "Remplis chaque élément à partir des informations disponibles dans ce texte qui est la transcription d'une vidéo d'un programme de recette de cuisine.",
+        "jsonSchema": {
+            "name":{
+                "type": "string",
+                "required": true,
+                "description": "nom de la recette"
+            },
+            "duration": {
+                "type": "number",
+                "required": true,
+                "description": "durée de la recette en minutes"
+            },
+            "ingredients": {
+                "type": "object",
+                "required": true,
+                "multiple": true,
+                "description": "Quels sont les ingrédients nécéssaire, et avec quelle quantité, pour réaliser la recette ?",
+                "children": {
+                    "name": {
+                        "type": "string",
+                        "required": true,
+                        "description": "nom de l'ingrédient"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "required": true,
+                        "description": "quantité de l'ingrédient"
+                    },
+                    "metric": {
+                        "type": "string",
+                        "required": true,
+                        "description": "unité de mesure de la quantité"
+                    },
+                    "part": {
+                        "type": "string",
+                        "description": "partie de la recette où cet ingrédient est utilisé"
+                    }
+                }
+            },
+            "steps": {
+                "type": "string",
+                "required": true,
+                "multiple": true,
+                "description": "les étapes de la recette"
+            },
+            "characters":{
+                "type": "string",
+                "multiple": true,
+                "required": false,
+                "description": "les personnages principaux qui apparaissent dans la vidéo"
+            }
+        }
+    }
+]
