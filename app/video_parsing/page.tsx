@@ -1,4 +1,3 @@
-//import { GetStaticProps } from 'next';
 import VideoParsingSettings from '@/components/VideoParsingSetting';
 import parsingSettings from '@/utils/parsing_settings.json'
 

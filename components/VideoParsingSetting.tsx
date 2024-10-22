@@ -22,7 +22,6 @@ const VideoParsingSettings = (props: { indexes: { id: string, ind: number, video
     };
 
     const executeParsing = async () => {
-        console.log("video = ",video, "settings = ",settings);
         const response = await fetch('/api/parser', {
             method: 'POST',
             body: JSON.stringify({
@@ -101,8 +100,17 @@ const VideoParsingSettings = (props: { indexes: { id: string, ind: number, video
                     </tbody>
                 </table>)}
 
-                 
+                 <div id="settings" style={{ marginTop: 24 }}>
                 <h2> Gérer le paramètrage </h2>
+                <TextField
+                    label="Prompt"
+                    value={settings?.videoPrompt || ''}
+                    onChange={(e) => setSettings({...settings, videoPrompt: e.target.value})}
+                    //has to be a textarea
+                    multiline
+                    rows={4}
+                    fullWidth
+                />
                 <JsonEditor
                     data={settings?.jsonSchema || {}}
                     onUpdate={(newData) => {
@@ -110,6 +118,7 @@ const VideoParsingSettings = (props: { indexes: { id: string, ind: number, video
                         setSettings({...settings, jsonSchema: newData.newData});
                     }}
                 /> 
+                </div>
             </div>
             <div id="rightBlock" style={{ flex: 1, padding: 12 }}>
                 <button
