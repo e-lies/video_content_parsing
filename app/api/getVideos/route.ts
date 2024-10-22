@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { TwelveLabs } from 'twelvelabs-js';
 
 //a get request to the server to get the different videos from an id
