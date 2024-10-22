@@ -31,7 +31,7 @@ const VideoParsingSettings = (props: {
     const response = await fetch(`/api/getVideos?id=${id}`);
     setProcessing(false);
     if (!response.ok) {
-      throw new Error("Failed to fetch videos");
+      alert("La récupération des vidéos a échoué !");
     }
     return response.json();
   };
@@ -50,7 +50,7 @@ const VideoParsingSettings = (props: {
     });
     setProcessing(false);
     if (!response.ok) {
-      throw new Error("Failed to execute parsing");
+      alert("Le parsing a échoué !");
     }
     return response.json();
   };
