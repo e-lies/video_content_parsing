@@ -1,11 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { JsonEditor } from 'json-edit-react';
-import { z } from 'zod';
 import { Autocomplete, TextField } from '@mui/material';
 
 
-const VideoParsingSettings = (props: { indexes: { id: string, ind: number, videoPrompt: string, schemaDescription: string, jsonSchema: {[key: string]: any} }[] }) => {
+const VideoParsingSettings = (props: { indexes: { id: string, ind: number, videoPrompt: string, schemaDescription: string, jsonSchema: {[key: string]: number | string | boolean} }[] }) => {
     //const [indexes, setIndexes] = useState([]);
     const { indexes } = props;
     const [index, setIndex] = useState<string | null>(null);

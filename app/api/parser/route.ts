@@ -3,10 +3,6 @@ import { TwelveLabs } from 'twelvelabs-js';
 import { z } from 'zod';
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
-import { ChatOpenAI } from '@langchain/openai';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { StructuredOutputParser } from '@langchain/core/output_parsers';
-import { LangChainAdapter } from 'ai';
 
 type JsonSchema = {
     type: "number" | "string" | "boolean";
@@ -17,10 +13,10 @@ type JsonSchema = {
     children?: {[key: string]: any};
 }
 
-function jsonToZod(jsonSchema: JsonSchema ): z.ZodType<any, any, any> {
+function jsonToZod(jsonSchema: JsonSchema ) {
     switch (jsonSchema.type) {
         case "number":
-            let numberSchema: z.ZodType<number | number[] | null, any, any> | z.ZodArray<z.ZodType<number | number[] | null, any, any>, "many"> = z.number().describe(jsonSchema.description);
+            let numberSchema: z.ZodType<number | number[] | null> | z.ZodArray<z.ZodType<number | number[] | null>, "many"> = z.number().describe(jsonSchema.description);
             if (!jsonSchema.required) {
             numberSchema = numberSchema.nullable();
             }
@@ -29,7 +25,7 @@ function jsonToZod(jsonSchema: JsonSchema ): z.ZodType<any, any, any> {
             }
             return numberSchema;
         case "string":
-            let stringSchema: z.ZodType<string | string[] | null, any, any> | z.ZodArray<z.ZodType<string | string[] | null, any, any>, "many"> = z.string().describe(jsonSchema.description);
+            let stringSchema: z.ZodType<string | string[] | null> | z.ZodArray<z.ZodType<string | string[] | null>, "many"> = z.string().describe(jsonSchema.description);
             if (jsonSchema.enum) {
                 stringSchema  = z.enum(jsonSchema.enum);
             }
@@ -41,7 +37,7 @@ function jsonToZod(jsonSchema: JsonSchema ): z.ZodType<any, any, any> {
             }
             return stringSchema;
         case "boolean":
-            let booleanSchema: z.ZodType<boolean | boolean[] | null, any, any> | z.ZodArray<z.ZodType<boolean | boolean[] | null, any, any>, "many"> = z.boolean().describe(jsonSchema.description);
+            let booleanSchema: z.ZodType<boolean | boolean[] | null> | z.ZodArray<z.ZodType<boolean | boolean[] | null>, "many"> = z.boolean().describe(jsonSchema.description);
             if (!jsonSchema.required) {
                 booleanSchema = booleanSchema.nullable();
             }
@@ -55,7 +51,7 @@ function jsonToZod(jsonSchema: JsonSchema ): z.ZodType<any, any, any> {
 
 }
 
-function jsonToZodObject(jsonSchema: {[key: string]: JsonSchema}): z.ZodObject<any> {
+function jsonToZodObject(jsonSchema: {[key: string]: JsonSchema}) {
     return z.object(Object.keys(jsonSchema).reduce((acc: {[key: string]: any}, cur: string) => {
         if (jsonSchema[cur].children) {
             acc[cur] = z.array(jsonToZodObject(jsonSchema[cur].children));
@@ -67,11 +63,10 @@ function jsonToZodObject(jsonSchema: {[key: string]: JsonSchema}): z.ZodObject<a
     },{}));
 }
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     const { id, videoPrompt, schemaDescription, jsonSchema }: { id: string, videoPrompt: string, schemaDescription: string, jsonSchema: {[key: string]: any} } = await req.json();
-    console.log("id = ",id, "videoPrompt = ",videoPrompt, "schemaDescription = ",schemaDescription, "jsonSchema = ",jsonSchema);
     const zodSchema = jsonToZodObject(jsonSchema);
-    console.log("zodSchema = ",zodSchema);
+    
     try {
         const client = new TwelveLabs({
             apiKey: process.env.TWELVE_LABS_API_KEY as string,

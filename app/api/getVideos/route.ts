@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { TwelveLabs } from 'twelvelabs-js';
 
 //a get request to the server to get the different videos from an id
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
     //get the id parameter in the url
     const id: string | null = req.nextUrl.searchParams.get('id');
     try{
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         });
         
         const listVideosFromId = async (index: string) => {
-            const videos = await client.index.video.list(id as string);
+            const videos = await client.index.video.list(index);
             return videos;
         }
         const videos = await listVideosFromId(id as string);

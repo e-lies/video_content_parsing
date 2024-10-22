@@ -16,7 +16,7 @@ const ParsingForm: React.FC = (indexes) => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, index: number) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         const updatedSubForms = formData.subForms.map((subForm, i) => 
             i === index ? { ...subForm, [name]: value } : subForm
         );
