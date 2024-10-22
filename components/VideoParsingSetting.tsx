@@ -157,8 +157,9 @@ const VideoParsingSettings = (props: {
               }
               //has to be a textarea
               multiline
-              rows={4}
+              rows={5}
               fullWidth
+              autoCapitalize="sentences"
             />
 
             <JsonEditor
