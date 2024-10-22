@@ -1,7 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { JsonEditor } from "json-edit-react";
-import { Autocomplete, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  TextField,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 
 const VideoParsingSettings = (props: {
   indexes: {
@@ -19,9 +24,12 @@ const VideoParsingSettings = (props: {
   const [settings, setSettings] = useState<{ [key: string]: any }>({});
   const [video, setVideo] = useState(null);
   const [response, setResponse] = useState(null);
+  const [processing, setProcessing] = useState<boolean>(false);
 
   const fetchVideos = async (id: string) => {
+    setProcessing(true);
     const response = await fetch(`/api/getVideos?id=${id}`);
+    setProcessing(false);
     if (!response.ok) {
       throw new Error("Failed to fetch videos");
     }
@@ -29,6 +37,7 @@ const VideoParsingSettings = (props: {
   };
 
   const executeParsing = async () => {
+    setProcessing(true);
     const response = await fetch("/api/parser", {
       method: "POST",
       body: JSON.stringify({
@@ -39,6 +48,7 @@ const VideoParsingSettings = (props: {
         "Content-Type": "application/json",
       },
     });
+    setProcessing(false);
     if (!response.ok) {
       throw new Error("Failed to execute parsing");
     }
@@ -173,6 +183,13 @@ const VideoParsingSettings = (props: {
         )}
       </div>
       <div id="rightBlock" style={{ flex: 1, padding: 12 }}>
+        <Backdrop
+          sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+          open={processing}
+          onClick={() => setProcessing(false)}
+        >
+          <CircularProgress color="inherit" size={100} />
+        </Backdrop>
         <button
           style={{
             width: "100%",
