@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
 
+export const maxDuration = 60;
+
 type JsonSchema = {
     type: "number" | "string" | "boolean";
     required?: boolean;
