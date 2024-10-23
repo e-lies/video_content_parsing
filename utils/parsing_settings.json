@@ -22,7 +22,7 @@
   {
     "id": "670fb0ccd3847000c0405d5c",
     "name": "Cuisinez",
-    "videoPrompt": "Cette vidéo est issue d'une émission de rectte de cuisine. L'objectif est de décrire les ingrédients et les étapes de la recette, et si possible, de décrire qui présente le programme.",
+    "videoPrompt": "Cette vidéo est issue d'une émission de recette de cuisine. L'objectif est de décrire les ingrédients et les étapes de la recette, et si possible, de décrire qui présente le programme.",
     "schemaDescription": "Remplis chaque élément à partir des informations disponibles dans ce texte qui est la transcription d'une vidéo d'un programme de recette de cuisine.",
     "jsonSchema": {
       "name": {
@@ -67,12 +67,6 @@
         "required": true,
         "multiple": true,
         "description": "les étapes de la recette"
-      },
-      "characters": {
-        "type": "string",
-        "multiple": true,
-        "required": false,
-        "description": "les personnages principaux qui apparaissent dans la vidéo"
       }
     }
   }

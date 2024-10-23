@@ -6,6 +6,8 @@ import {
   TextField,
   Backdrop,
   CircularProgress,
+  Divider,
+  Button,
 } from "@mui/material";
 
 const VideoParsingSettings = (props: {
@@ -51,6 +53,27 @@ const VideoParsingSettings = (props: {
     setProcessing(false);
     if (!response.ok) {
       alert("Le parsing a échoué !");
+    }
+    return response.json();
+  };
+
+  const updateSettings = async () => {
+    setProcessing(true);
+    const response = await fetch("/api/parsing_settings", {
+      method: "PUT",
+      body: JSON.stringify({
+        ...settings,
+        id: index,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setProcessing(false);
+    if (!response.ok) {
+      alert("La mise à jour des paramètres a échoué !");
+    } else {
+      alert("Les paramètres ont été mis à jour avec succès !");
     }
     return response.json();
   };
@@ -139,11 +162,9 @@ const VideoParsingSettings = (props: {
                       onClick={() => setVideo(video.id)}
                       style={{
                         cursor: "pointer",
-                        marginRight: 8,
-                        display: "block",
-                        marginLeft: "auto",
-                        border: "none",
-                        backgroundColor: "transparent",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       🎥
@@ -154,16 +175,31 @@ const VideoParsingSettings = (props: {
             </tbody>
           </table>
         )}
-
+        <Divider />
         {index && (
           <div id="settings" style={{ marginTop: 24 }}>
             <h2> Gérer le paramètrage </h2>
 
             <TextField
+              style={{ margin: 10 }}
               label="Prompt"
               value={settings?.videoPrompt || ""}
               onChange={(e) =>
                 setSettings({ ...settings, videoPrompt: e.target.value })
+              }
+              //has to be a textarea
+              multiline
+              rows={5}
+              fullWidth
+              autoCapitalize="sentences"
+            />
+
+            <TextField
+              style={{ margin: 10 }}
+              label="Description"
+              value={settings?.schemaDescription || ""}
+              onChange={(e) =>
+                setSettings({ ...settings, schemaDescription: e.target.value })
               }
               //has to be a textarea
               multiline
@@ -179,6 +215,13 @@ const VideoParsingSettings = (props: {
                 setSettings({ ...settings, jsonSchema: newData.newData });
               }}
             />
+            <Button
+              style={{ margin: 10 }}
+              variant="contained"
+              onClick={updateSettings}
+            >
+              Enregistrer
+            </Button>
           </div>
         )}
       </div>
