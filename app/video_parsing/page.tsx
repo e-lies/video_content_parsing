@@ -1,5 +1,5 @@
-import VideoParsingSettings from '@/components/VideoParsingSetting';
-import parsingSettings from '@/utils/parsing_settings.json'
+import VideoParsingSettings from "@/components/VideoParsingSetting";
+import parsingSettings from "@/utils/parsing_settings.json";
 
 /*const fetchIndexes = async () => {
     const response = await fetch('http://localhost:3000/api/getIndexes');
@@ -10,12 +10,11 @@ import parsingSettings from '@/utils/parsing_settings.json'
 }*/
 
 const Page = () => {
-    return (
+  return (
     <div id="parsing">
-        <VideoParsingSettings indexes={parsingSettings as any[]} />;
+      <VideoParsingSettings parsingSettings={parsingSettings as any[]} />;
     </div>
-    );
+  );
 };
-
 
 export default Page;

@@ -16,6 +16,10 @@
         "required": true,
         "multiple": true,
         "description": "un résumé de la réponse donnée à la question principale"
+      },
+      "animateur": {
+        "type": "string",
+        "description": "qui présente cet épisode ?"
       }
     }
   },
